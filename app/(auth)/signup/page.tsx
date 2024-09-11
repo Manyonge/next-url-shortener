@@ -1,5 +1,6 @@
 "use client"
 import { Button, Checkbox, Input } from '@/components/ui'
+import { useToast } from '@/hooks/use-toast'
 import { SignUpFormData, SignupFormSchema } from '@/lib/definitions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -12,11 +13,14 @@ const [showPassword, setShowPassword]= useState(false)
     const handleShowPassword = (checked: boolean) => {
     setShowPassword(checked)
 }
-
+const {toast} = useToast()
     const { mutate, isPending } = useMutation({
         mutationFn: async(data: SignUpFormData) => {
             console.log(data);
-        }
+        },
+        onSuccess: () => toast({
+            title: 'data valid',
+        })
     })
     
     const onSubmit: SubmitHandler<SignUpFormData> =  (data: SignUpFormData, event) => {
