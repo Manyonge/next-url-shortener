@@ -14,18 +14,15 @@ const [showPassword, setShowPassword]= useState(false)
 }
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async({data, event}: {data: SignUpFormData, event: any}) => {
-            // e?.preventDefault()
-            // console.log(e);
-            console.log({data, event});
-            
+        mutationFn: async(data: SignUpFormData) => {
+            console.log(data);
         }
     })
     
     const onSubmit: SubmitHandler<SignUpFormData> =  (data: SignUpFormData, event) => {
         console.log({data, event});
         
- mutate({data, event})
+ mutate(data) 
     }
     
     return (
