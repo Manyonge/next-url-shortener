@@ -13,6 +13,7 @@ const [showPassword, setShowPassword]= useState(false)
     const handleShowPassword = (checked: boolean) => {
     setShowPassword(checked)
 }
+
 const {toast} = useToast()
     const { mutate, isPending } = useMutation({
         mutationFn: async(data: SignUpFormData) => {
@@ -22,13 +23,13 @@ const {toast} = useToast()
             title: 'data valid',
         })
     })
-    
+
     const onSubmit: SubmitHandler<SignUpFormData> =  (data: SignUpFormData, event) => {
         console.log({data, event});
-        
- mutate(data) 
+
+ mutate(data)
     }
-    
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='w-1/2 mx-auto mt-28' >
             <h5 className='text-center mb-5' >Sign up </h5>
