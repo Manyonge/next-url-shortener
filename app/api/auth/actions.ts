@@ -1,5 +1,5 @@
 "use server"
-import '../../envConfig'
+import '@/envConfig'
 import { prisma } from "@/prisma/prismaClient"
 import * as bcrypt from "bcrypt";
 
@@ -26,5 +26,29 @@ export async function signUp(data){
     console.log({error})
     throw error
 
+  }
+}
+
+export async function login(data){
+  try{
+    const user = await prisma.users.findFirst({
+      where: {
+        email: data.email
+      }
+    })
+    if(!user){
+      throw new Error('This account does not exist')
+    }
+
+    const passwordsMatch = await bcrypt.compare(data.password, user.hash)
+console.log({passwordsMatch})
+    if(!passwordsMatch){
+      throw new Error('wrong password')
+    }
+
+    return {message: 'Login successful'}
+
+  }catch(error){
+    throw error
   }
 }

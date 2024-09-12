@@ -1,5 +1,5 @@
 "use client"
-import { signUp } from '@/app/api/actions'
+import { signUp } from '@/app/api/auth/actions'
 import { Button, Checkbox, Input } from '@/components/ui'
 import { useToast } from '@/hooks/use-toast'
 import { SignUpFormData, SignupFormSchema } from '@/lib/definitions'
@@ -9,8 +9,8 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function SignupForm() {
-const [showPassword, setShowPassword]= useState(false)
     const {register, handleSubmit, formState: {errors}}=useForm<SignUpFormData>({resolver: zodResolver(SignupFormSchema)})
+const [showPassword, setShowPassword]= useState(false)
     const handleShowPassword = (checked: boolean) => {
     setShowPassword(checked)
 }
