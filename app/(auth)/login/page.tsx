@@ -61,7 +61,7 @@ mutate(data)
   <Checkbox className='mb-5 mr-2 border-white' onCheckedChange={handleShowPassword} />
       Show password
   </label>
-  <Button disabled={isPending} type='submit' className={`block mx-auto ${isPending ? 'opacity-50' : ''} `} >{ isPending?'Signing up...': 'Sign up'}</Button>
+  <Button disabled={isPending} type='submit' className={`block mx-auto ${isPending ? 'opacity-50' : ''} `} >{ isPending?'Logging in...': 'Login'}</Button>
 </form>
   )
 }
