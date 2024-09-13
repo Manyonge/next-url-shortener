@@ -44,3 +44,27 @@ export async function findOneLink(shortId){
     throw e
   }
 }
+
+
+export async function deleteLink(id: number){
+  try{
+    const record = await prisma.links.findUnique({
+    where: {
+      id
+    }
+  })
+  if(!record){
+
+       throw new Error('Link not found')
+
+  }
+  await prisma.links.delete({
+    where: {
+      id
+    }
+  })
+  }
+  catch(error){
+    throw (error)
+  }
+}
