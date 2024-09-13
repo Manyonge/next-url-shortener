@@ -20,6 +20,30 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/*table styles*/
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid grey;
+}
+
+@media (max-width: 900px) {
+  th,
+  td {
+    font-size: 0.8rem;
+  }
+}
+
+tr:nth-of-type(even) {
+  background-color: lightgrey;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

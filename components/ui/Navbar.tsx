@@ -10,7 +10,7 @@ export function Navbar(){
   const privateRoutes = useMemo(()=>pathname?.includes('admin')?[{label: 'My Links', route: '/admin/my-links'},{label: 'Create Link', route: '/admin/create'}]: [], [pathname])
 
   return (
-    <nav className="flex items-center justify-between px-2">
+    <nav className="flex items-center justify-between mb-3">
       <Link href={'/'}>
       <h1>Next.js URL Shortener :)</h1>
       </Link>
