@@ -2,7 +2,10 @@
 import '@/envConfig'
 import { prisma } from "@/prisma/prismaClient"
 import * as bcrypt from "bcrypt";
-
+import { validate } from 'class-validator';
+import { LoginDto } from './interfaces';
+import { z } from 'zod';
+import { LoginFormSchema } from './validation';
 export async function signUp(data){
   try{
   const user = await prisma.users.findFirst({
@@ -31,6 +34,7 @@ export async function signUp(data){
 
 export async function login(data){
   try{
+LoginFormSchema.parse(data)
     const user = await prisma.users.findFirst({
       where: {
         email: data.email
@@ -49,6 +53,7 @@ console.log({passwordsMatch})
     return {message: 'Login successful'}
 
   }catch(error){
+    console.log(error)
     throw error
   }
 }

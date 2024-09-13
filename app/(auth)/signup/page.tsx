@@ -5,10 +5,12 @@ import { useToast } from '@/hooks/use-toast'
 import { SignUpFormData, SignupFormSchema } from '@/lib/definitions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function SignupForm() {
+  const router = useRouter()
     const {register, handleSubmit, formState: {errors}}=useForm<SignUpFormData>({resolver: zodResolver(SignupFormSchema)})
 const [showPassword, setShowPassword]= useState(false)
     const handleShowPassword = (checked: boolean) => {
@@ -19,9 +21,11 @@ const {toast} = useToast()
         mutationFn: async(data: SignUpFormData) => {
             await signUp(data)
         },
-        onSuccess: () => toast({
+        onSuccess: () => {toast({
             title: 'Account created successfully',
-        }),
+        })
+        router.push('/login')
+        },
         onError: (error)=> toast({
           variant: 'destructive',
           title: error?.message

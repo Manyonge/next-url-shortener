@@ -1,9 +1,12 @@
 {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true,
-    "printWidth": 80,
-    "plugins": ["prettier-plugin-tailwindcss"]
-  }
-  
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": true,
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
+}

@@ -1,6 +1,7 @@
 "use server"
 import { generateRandomString } from "@/Helper"
 import { prisma } from "@/prisma/prismaClient"
+import { redirect } from "next/navigation"
 
 export async function createLink (data){
   try{
@@ -27,5 +28,19 @@ await prisma.links.create({
   }
   catch(error){
     throw error
+  }
+}
+
+export async function findOneLink(shortId){
+  try{
+    const link= await prisma.links.findUnique({
+      where: {
+        shortId
+      }
+    })
+    redirect( link?.url)
+  }
+  catch(e){
+    throw e
   }
 }

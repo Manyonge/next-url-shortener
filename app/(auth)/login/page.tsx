@@ -4,9 +4,10 @@ import { Button, Checkbox, Input } from '@/components/ui';
 import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z, ZodType } from 'zod';
+import { z, ZodError, ZodType } from 'zod';
 type LoginFormSchemaType={
   email: string;
   password: string;
@@ -25,6 +26,7 @@ const LoginFormSchema : ZodType<LoginFormSchemaType> = z.object({
 })
 
 export default function Login (){
+  const router = useRouter()
 const {register, handleSubmit, formState: {errors}}=useForm<LoginFormSchemaType>({resolver: zodResolver(LoginFormSchema)})
 const {toast}= useToast()
 const [showPassword, setShowPassword]= useState(false)
@@ -32,13 +34,21 @@ const [showPassword, setShowPassword]= useState(false)
     setShowPassword(checked)
 }
   const { mutate, isPending }= useMutation({
-    mutationFn: (data: LoginFormSchemaType)=> login(data) ,
+    mutationFn: (data: LoginFormSchemaType)=> login({email: 'hello', password: null}) ,
     onSuccess: ()=>{
       toast({
         title: 'Logged in successfully'
       })
+      router.push('/admin/my-links')
     },
     onError: (error)=>{
+console.log(typeof error)
+      if(error instanceof ZodError ){
+        console.log('logging array')
+        error.map((item)=>toast({title: item.message, variant: 'destructive'}))
+        return
+      }
+
       toast({title: error.message, variant: 'destructive'})
     },
   })
