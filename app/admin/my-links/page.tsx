@@ -3,7 +3,11 @@ import { DeleteButton } from "@/components/ui/DeleteButton"
 import { prisma } from "@/prisma/prismaClient"
 
 export default async function MyLinks(){
-  const links = await prisma.links.findMany()
+  const links = await prisma.links.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
   return(
     <>
       <h3 className="mb-5 text-center font-bold" >My Links</h3>

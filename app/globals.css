@@ -31,6 +31,8 @@ table {
 th,
 td {
   border: 1px solid grey;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 @media (max-width: 900px) {
@@ -40,9 +42,6 @@ td {
   }
 }
 
-tr:nth-of-type(even) {
-  background-color: lightgrey;
-}
 
 @layer utilities {
   .text-balance {

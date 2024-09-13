@@ -2,8 +2,10 @@
 import { createLink } from '@/app/api/links/actions';
 import { Button, Input } from '@/components/ui';
 import { useToast } from '@/hooks/use-toast';
+import { revalidateNextPath } from '@/utils/revalidatePath';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z, ZodType } from 'zod';
 type LinkSchemaType={
@@ -20,6 +22,7 @@ const LinkSchema : ZodType<LinkSchemaType> = z.object({
 export default function CreateLink (){
 const {register, handleSubmit, formState: {errors}}=useForm<LinkSchemaType>({resolver: zodResolver(LinkSchema)})
 const {toast}= useToast()
+const router = useRouter()
 
   const { mutate, isPending }= useMutation({
     mutationFn: (data: LinkSchemaType)=> createLink(data) ,
@@ -27,6 +30,8 @@ const {toast}= useToast()
       toast({
         title: 'Link Shortened Successfully'
       })
+      const path = '/admin/my-links'
+      revalidateNextPath(path, true)
     },
     onError: (error)=>{
       toast({title: error.message, variant: 'destructive'})
