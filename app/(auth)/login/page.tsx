@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z, ZodError, ZodType } from 'zod';
+import { z, ZodType } from 'zod';
 type LoginFormSchemaType={
   email: string;
   password: string;
@@ -34,7 +34,7 @@ const [showPassword, setShowPassword]= useState(false)
     setShowPassword(checked)
 }
   const { mutate, isPending }= useMutation({
-    mutationFn: (data: LoginFormSchemaType)=> login({email: 'hello', password: null}) ,
+    mutationFn: (data: LoginFormSchemaType)=> login(data) ,
     onSuccess: ()=>{
       toast({
         title: 'Logged in successfully'
@@ -42,20 +42,11 @@ const [showPassword, setShowPassword]= useState(false)
       router.push('/admin/my-links')
     },
     onError: (error)=>{
-console.log(typeof error)
-      if(error instanceof ZodError ){
-        console.log('logging array')
-        error.map((item)=>toast({title: item.message, variant: 'destructive'}))
-        return
-      }
-
       toast({title: error.message, variant: 'destructive'})
     },
   })
 
-  const onSubmit: SubmitHandler<LoginFormSchemaType> =  (data: LoginFormSchemaType, event) => {
-      console.log({data, event});
-
+  const onSubmit: SubmitHandler<LoginFormSchemaType> =  (data: LoginFormSchemaType) => {
 mutate(data)
   }
 

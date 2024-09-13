@@ -34,7 +34,6 @@ const {toast} = useToast()
     })
 
     const onSubmit: SubmitHandler<SignUpFormData> =  (data: SignUpFormData, event) => {
-        console.log({data, event});
 
  mutate(data)
     }
